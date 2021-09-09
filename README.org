@@ -1,0 +1,39 @@
+#+TITLE: =python-btw=
+#+AUTHOR: Brandon T. Willard
+
+[[Testing Workflow][file:https://github.com/brandonwillard/python-btw/workflows/Testing%20Workflow/badge.svg]]
+
+Custom modifications for Python.
+
+* Features
+
+  - ~python-shell-send~ functions that handle multiple lines (e.g. using ~%cpaste~), echo the output, and handle Jupyter/IPython consoles
+  - View Python docstrings using ~help-mode~ and the currently active shell session (replaces ~lsp-ui~)
+  - Set ~python-shell-send~ keybindings in Spacemacs
+
+* Usage
+
+  Just enable the minor modes:
+  #+BEGIN_SRC elisp :eval never :exports code :results none
+  (python-btw-mode +1)
+  #+END_SRC
+
+* Installation
+
+  Use your favorite approach to installing Emacs packages from GitHub.
+
+  Here's an example of one:
+  #+BEGIN_SRC elisp :eval never :exports code :results none
+  (quelpa
+  '(python-btw
+    :fetcher git
+    :url "https://github.com/brandonwillard/python-btw.git"))
+  #+END_SRC
+
+* Development
+  To use as a Cask dependency:
+  #+BEGIN_SRC elisp :eval never :exports code :results none
+  (depends-on "python-btw"
+              :git "https://github.com/brandonwillard/python-btw.git"
+              :branch "master")
+  #+END_SRC
