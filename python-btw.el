@@ -182,15 +182,6 @@ This is a replacement for `python-shell-send-region'.
 (defun python-btw//noop (&rest r)
   nil)
 
-(defun python-btw//comint-output-turn-buffer-read-only (&rest r)
-  (add-text-properties comint-last-output-start (line-end-position 0)
-                       '(read-only "Process output is read-only."
-                                   rear-nonsticky (inhibit-line-move-field-capture))))
-
-(defun python-btw//setup-readonly-comint-output ()
-  ;; (advice-add #'comint-output-filter :after #'python-btw//comint-output-turn-buffer-read-only)
-  (add-hook 'comint-output-filter-functions #'python-btw//comint-output-turn-buffer-read-only 'append t))
-
 ;;;###autoload
 (define-minor-mode python-btw-mode
   "Activate `python-btw' mode."
@@ -200,9 +191,6 @@ This is a replacement for `python-shell-send-region'.
   :global t
   (if python-btw-mode
       (progn
-        ;; Make comint output read-only
-        (add-hook 'inferior-python-mode-hook #'python-btw//setup-readonly-comint-output t)
-
         ;; This calls `ipython --version', which is costly, so disable it.
         (advice-add #'python-btw//python-setup-shell :override #'python-btw//noop)
 
@@ -255,8 +243,6 @@ See `company-transformers'."
           (add-hook 'python-mode-hook #'python-extras/python-company-conf)
           (add-hook 'inferior-python-mode-hook #'python-extras/python-company-conf)))
     (progn
-      (remove-hook 'inferior-python-mode-hook #'python-btw//setup-readonly-comint-output t)
-
       (advice-remove #'python-btw//python-setup-shell #'python-btw//noop)
 
       (setq python-shell-completion-native-disabled-interpreters
