@@ -85,9 +85,9 @@ Ignores beginning white-space."
       (end-of-line)
       ;; or `forward-line'?
       (setq end (point))
-      (beginning-of-line-text)
+      (beginning-of-line)
       (setq start (point)))
-    (setq line (buffer-substring-no-properties start end))
+    (setq line (s-trim-left (buffer-substring-no-properties start end)))
     (python-btw//python-shell-send-string-echo (python-btw//add-missing-newline line))))
 
 (defun python-btw//python-shell-send-syntax-line-echo (&optional send-main msg)
